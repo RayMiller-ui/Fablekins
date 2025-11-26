@@ -9,12 +9,12 @@ class OverworldMap{
         this.upperImage.src = config.uppersrc;
     }
 
-    drawLowerImg(ctx){
-        ctx.drawImage(this.lowerImage, 0, 0);
+    drawLowerImg(ctx, CameraPerson){
+        ctx.drawImage(this.lowerImage, Utilities.withGrid(10.5) - CameraPerson.x, Utilities.withGrid(6) - CameraPerson.y);
     }
 
-    drawUpperImg(ctx){
-        ctx.drawImage(this.upperImage, 0, 0)
+    drawUpperImg(ctx, CameraPerson){
+        ctx.drawImage(this.upperImage, Utilities.withGrid(10.5) - CameraPerson.x, Utilities.withGrid(6) - CameraPerson.y)
     }
 }
 
@@ -70,6 +70,12 @@ class OverworldMap{
                     y:Utilities.withGrid(6),
                     src:"/images/characters/people/HQ.png",
                     isPlayerControlled:true,
+                }),
+                npc: new Person({
+                    x:Utilities.withGrid(3),
+                    y:Utilities.withGrid(5),
+                    src:"/images/characters/people/HQ.png",
+                    isPlayerControlled:false,
                 })
             }
         }

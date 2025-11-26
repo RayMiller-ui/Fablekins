@@ -15,8 +15,18 @@ class Overworld {
       //Clearing the canvas -> [Clears the whole canvar, har frame pe]
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+      //Camera focused character object
+      const CameraPerson = this.map.gameObjects.hero;
+
       //Draws Lower image over the map -> [Layer 1]
-      this.map.drawLowerImg(this.ctx);
+      this.map.drawLowerImg(this.ctx, CameraPerson);
+
+      //Updates everything before drawing 
+      Object.values(this.map.gameObjects).forEach(e => {
+        e.update({
+          pressedKey: this.DirectionInput.direction,
+        })
+      })
 
       //Draws game objects -> [Main Object]
       Object.values(this.map.gameObjects).forEach(e => {
@@ -24,11 +34,11 @@ class Overworld {
         e.update({
           pressedKey: this.DirectionInput.direction,
         })
-        e.sprite.draw(this.ctx);
+        e.sprite.draw(this.ctx, CameraPerson);
       })
 
       //Draws Upper image over the map -> [Foreground, sabko cover karega]
-      this.map.drawUpperImg(this.ctx);
+      this.map.drawUpperImg(this.ctx, CameraPerson);
 
       requestAnimationFrame(() => {
         step();

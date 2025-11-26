@@ -88,9 +88,9 @@ class Sprite{
         }
     }
 
-    draw(ctx){
-        const x = this.gameObject.x - 8;
-        const y = this.gameObject.y - 18;
+    draw(ctx, CameraPerson){
+        const x = this.gameObject.x - 8 + Utilities.withGrid(10.5) - CameraPerson.x;
+        const y = this.gameObject.y - 18 + Utilities.withGrid(6) - CameraPerson.y;
 
         // This is a single image, no need for cropping
         this.useShadow && this.isShadowLoaded && ctx.drawImage(this.shadow,x,y);
