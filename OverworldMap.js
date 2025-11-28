@@ -10,11 +10,17 @@ class OverworldMap{
     }
 
     drawLowerImg(ctx, CameraPerson){
-        ctx.drawImage(this.lowerImage, Utilities.withGrid(10.5) - CameraPerson.x, Utilities.withGrid(6) - CameraPerson.y);
+        ctx.drawImage(this.lowerImage, 
+            Utilities.withGrid(10.5) - CameraPerson.x, 
+            Utilities.withGrid(6) - CameraPerson.y
+        );
     }
 
     drawUpperImg(ctx, CameraPerson){
-        ctx.drawImage(this.upperImage, Utilities.withGrid(10.5) - CameraPerson.x, Utilities.withGrid(6) - CameraPerson.y)
+        ctx.drawImage(this.upperImage, 
+            Utilities.withGrid(10.5) - CameraPerson.x, 
+            Utilities.withGrid(6) - CameraPerson.y
+        );
     }
 }
 
