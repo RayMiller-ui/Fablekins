@@ -68,18 +68,18 @@ class OverworldMap{
         // },
 
         NorthStreet: {
-            lowersrc: "/images/maps/TestWalkingMapLower.png",
-            uppersrc: "/images/maps/TestWalkingMapUpper.png",
+            lowersrc: "/images/maps/DemoMap_03.jpeg",
+            uppersrc: "/images/maps/DemoMap_Upper_04.jpeg",
             gameObjects:{
                 hero: new Person({
-                    x:Utilities.withGrid(5),
-                    y:Utilities.withGrid(6),
+                    x:Utilities.withGrid(15),
+                    y:Utilities.withGrid(15),
                     src:"/images/characters/people/HQ.png",
                     isPlayerControlled:true,
                 }),
                 npc: new Person({
-                    x:Utilities.withGrid(3),
-                    y:Utilities.withGrid(5),
+                    x:Utilities.withGrid(19),
+                    y:Utilities.withGrid(13),
                     src:"/images/characters/people/HQ.png",
                     isPlayerControlled:false,
                 })
