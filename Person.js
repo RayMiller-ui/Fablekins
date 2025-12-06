@@ -14,31 +14,16 @@ class Person extends GameObject{
          
     }
 
-    // EVERY PERSON UPDATE HAPPENS HERE 
-    // THIS WILL BE USED IN OVERWORLD TO UPDATE THE PERSON'S STATE
-    update(state) {
-        this.updatePosition();
-        this.updateSprite(state);
-
-        if (this.isPlayerControlled && this.remainingMovement === 0 && state.pressedKey){ 
-            this.direction = state.pressedKey;
-            console.log(state.map.isSpaceTaken(this.x, this.y, this.direction));
-            this.remainingMovement = 16;     
-        }
-    }
 
     // BELOW FUNCTIONS ARE CALLED DIRECTLY INSIDE update() PRESENT HERE.
     // THESE FUNCTIONS NEVER USED OUTSIDE THIS SCRIFT FILE 
 
     // Character position updates
     updatePosition () {
-        if (this.remainingMovement > 0){
             const [axis, change] = this.directionUpdate[this.direction];
             //console.log ([axis, change]);
             this[axis] += change;
             this.remainingMovement -= 1;
-
-        }
     }
 
     // Sprite sheet animation updates
@@ -54,5 +39,37 @@ class Person extends GameObject{
             this.sprite.setAnimation("walk-"+this.direction);
         }
     }
+
+    startBehaviour(state, behaviour){
+
+        // Sets the direction coming from whatever direction [method] passed in behaviour parameter [object]
+        this.direction = behaviour.direction;
+
+        if (behaviour.type === "walk"){
+            //console.log(state.map.isSpaceTaken(this.x, this.y, this.direction));
+            if (state.map.isSpaceTaken(this.x, this.y, this.direction)){
+                return;
+            }
+            this.remainingMovement = 16;
+        }
+    }
+
+    // EVERY PERSON UPDATE HAPPENS HERE 
+    // THIS WILL BE USED IN OVERWORLD TO UPDATE THE PERSON'S STATE
+    update(state) {
+        if (this.remainingMovement > 0){
+            this.updatePosition();
+        }
+        this.updateSprite(state);
+
+        if (this.isPlayerControlled && this.remainingMovement === 0 && state.pressedKey){ 
+            this.startBehaviour(state, {
+                type: "walk",
+                direction: state.pressedKey,
+            })
+        }
+    }
+
+    
    
 }
