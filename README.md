@@ -1,2 +1,2 @@
 # Fablekins
-A 2D Game build entierly over JavaScript!
+A 2D Game Engine build entierly over JavaScript!
