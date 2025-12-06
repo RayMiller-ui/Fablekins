@@ -25,15 +25,12 @@ class Overworld {
       Object.values(this.map.gameObjects).forEach(e => {
         e.update({
           pressedKey: this.DirectionInput.direction,
+          map: this.map,
         })
       })
 
       //Draws game objects -> [Main Object]
       Object.values(this.map.gameObjects).forEach(e => {
-        //object.x += 1;
-        e.update({
-          pressedKey: this.DirectionInput.direction,
-        })
         e.sprite.draw(this.ctx, CameraPerson);
       })
 
@@ -55,6 +52,7 @@ class Overworld {
   init() {
 
     this.map = new OverworldMap(window.OverworldMaps.NorthStreet);
+    console.log(this.map.walls);
 
     this.DirectionInput = new DirectionInput();
     this.DirectionInput.init();

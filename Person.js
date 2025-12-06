@@ -14,18 +14,22 @@ class Person extends GameObject{
          
     }
 
-    
+    // EVERY PERSON UPDATE HAPPENS HERE 
+    // THIS WILL BE USED IN OVERWORLD TO UPDATE THE PERSON'S STATE
     update(state) {
         this.updatePosition();
         this.updateSprite(state);
 
         if (this.isPlayerControlled && this.remainingMovement === 0 && state.pressedKey){ 
             this.direction = state.pressedKey;
+            console.log(state.map.isSpaceTaken(this.x, this.y, this.direction));
             this.remainingMovement = 16;     
         }
     }
 
-    
+    // BELOW FUNCTIONS ARE CALLED DIRECTLY INSIDE update() PRESENT HERE.
+    // THESE FUNCTIONS NEVER USED OUTSIDE THIS SCRIFT FILE 
+
     // Character position updates
     updatePosition () {
         if (this.remainingMovement > 0){

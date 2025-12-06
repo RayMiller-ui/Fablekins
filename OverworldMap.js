@@ -2,6 +2,8 @@ class OverworldMap{
     constructor(config){
         this.gameObjects = config.gameObjects;
 
+        this.walls = config.walls;
+
         this.lowerImage = new Image();
         this.lowerImage.src = config.lowersrc;
 
@@ -22,6 +24,11 @@ class OverworldMap{
             Utilities.withGrid(6) - CameraPerson.y
         );
     }
+
+    isSpaceTaken(currentX, currentY, direction){
+        const {x,y} = Utilities.upcomingPosition(currentX, currentY, direction);
+        return this.walls[`${x}, ${y}`] ?? false;
+    }
 }
 
 
@@ -31,59 +38,27 @@ class OverworldMap{
     
     window.OverworldMaps = {
 
-        // FUTURE PLANS
-
-        // DemoRoom: {
-        //     lowersrc: "/images/maps/DemoLower.png",
-        //     uppersrc: "/images/maps/DemoUpper.png",
-        //     gameObjects:{
-        //         hero: new Person({
-        //             x:Utilities.withGrid(5),
-        //             y:Utilities.withGrid(6),
-        //             useShadow:true,
-        //         }),
-        //         npc1: new Person({
-        //             x:Utilities.withGrid(7),
-        //             y:Utilities.withGrid(8),
-        //             src:"/images/characters/people/npc1.png",
-        //         })
-        //     }
-        // },
-
-        // Kitchen: {
-        //     lowersrc: "/images/maps/KitchenLower.png",
-        //     uppersrc: "/images/maps/KitchenUpper.png",
-        //     gameObjects:{
-        //         hero: new Person({
-        //             x:Utilities.withGrid(5),
-        //             y:Utilities.withGrid(6),
-        //             isPlayerControlled:true,
-        //         }),
-        //         npc1: new Person({
-        //             x:Utilities.withGrid(7),
-        //             y:Utilities.withGrid(8),
-        //             src:"/images/characters/people/npc1.png",
-        //         })
-        //     }
-        // },
-
         NorthStreet: {
             lowersrc: "/images/maps/DemoMap_03.jpeg",
             uppersrc: "/images/maps/DemoMap_Upper_04.jpeg",
             gameObjects:{
                 hero: new Person({
                     x:Utilities.withGrid(15),
-                    y:Utilities.withGrid(15),
+                    y:Utilities.withGrid(13),
                     src:"/images/characters/people/HQ.png",
                     isPlayerControlled:true,
                 }),
                 npc: new Person({
-                    x:Utilities.withGrid(19),
-                    y:Utilities.withGrid(13),
+                    x:Utilities.withGrid(32),
+                    y:Utilities.withGrid(3),
                     src:"/images/characters/people/HQ.png",
                     isPlayerControlled:false,
-                })
-            }
+                })   
+
+            },
+
+            //Collision Location Inputs
+            walls: Colliders.Forest
         }
 
     }
