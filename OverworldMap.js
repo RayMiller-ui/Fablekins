@@ -9,6 +9,11 @@ class OverworldMap{
 
         this.upperImage = new Image();
         this.upperImage.src = config.uppersrc;
+
+        // DOT SYSTEM
+        this.totalDots = 30;
+        this.dotsCollected = 0;
+        this.activeDot = null;
     }
 
     drawLowerImg(ctx, CameraPerson){
@@ -29,6 +34,52 @@ class OverworldMap{
         const {x,y} = Utilities.upcomingPosition(currentX, currentY, direction);
         return this.walls[`${x}, ${y}`] ?? false;
     }
+
+    // SPAWING MY LITTLE DOTS
+    spawnDot() {
+        if (this.dotsCollected >= this.totalDots) return;
+      
+        const x = Utilities.withGrid(
+          Math.floor(Math.random() * 20) + 5
+        );
+        const y = Utilities.withGrid(
+          Math.floor(Math.random() * 15) + 5
+        );
+      
+        // Avoid spawning inside walls
+        if (this.walls[`${x}, ${y}`]) {
+          this.spawnDot();
+          return;
+        }
+      
+        this.activeDot = new Dot({
+          x,
+          y,
+          src: "/images/dot.png", // red dot image
+        });
+      
+        this.gameObjects.dot = this.activeDot;
+
+        console.log("Dot spawned")
+      }
+
+      // MY LITTLE DOTS ARE CONSUMED
+      removeDot(dot) {
+        delete this.gameObjects.dot;
+        this.activeDot = null;
+      
+        this.dotsCollected++;
+      
+        updateDotCounter(this.dotsCollected, this.totalDots);
+      
+        if (this.dotsCollected === this.totalDots) {
+          showWinMessage();
+        } else {
+          this.spawnDot();
+        }
+      }
+      
+      
 }
 
 

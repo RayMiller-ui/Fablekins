@@ -9,6 +9,21 @@ body {
   overflow: hidden;
 }
 
+.hud {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+
+  background: black;
+  color: red;
+  padding: 4px 8px;
+
+  font-family: monospace;
+  font-size: 14px;
+  z-index: 999;
+}
+
+
 .game-container {
   position: relative; 
   width: 352px;

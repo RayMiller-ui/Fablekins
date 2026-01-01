@@ -19,12 +19,27 @@ class Person extends GameObject{
     // THESE FUNCTIONS NEVER USED OUTSIDE THIS SCRIFT FILE 
 
     // Character position updates
-    updatePosition () {
-            const [axis, change] = this.directionUpdate[this.direction];
-            //console.log ([axis, change]);
-            this[axis] += change;
-            this.remainingMovement -= 1;
-    }
+    updatePosition(deltaTime) {
+        const speed = 144; // pixels per second
+        const [axis, change] = this.directionUpdate[this.direction];
+      
+        const movement = Math.min(
+          speed * deltaTime,
+          this.remainingMovement
+        );
+      
+        this[axis] += change * movement;
+        this.remainingMovement -= movement;
+
+        // Snap exactly to tile at the end
+        if (this.remainingMovement <= 0) {
+          this.x = this.targetX;
+          this.y = this.targetY;
+          this.remainingMovement = 0;
+        }
+
+      }
+      
 
     // Sprite sheet animation updates
     updateSprite(state){
@@ -47,10 +62,16 @@ class Person extends GameObject{
 
         if (behaviour.type === "walk"){
             //console.log(state.map.isSpaceTaken(this.x, this.y, this.direction));
-            if (state.map.isSpaceTaken(this.x, this.y, this.direction)){
+            const { x, y } = Utilities.upcomingPosition(this.x, this.y, this.direction);
+
+            if (state.map.walls[`${x}, ${y}`]) {
                 return;
             }
+
             this.remainingMovement = 16;
+            this.targetX = x;
+            this.targetY = y;
+
         }
     }
 
@@ -58,8 +79,9 @@ class Person extends GameObject{
     // THIS WILL BE USED IN OVERWORLD TO UPDATE THE PERSON'S STATE
     update(state) {
         if (this.remainingMovement > 0){
-            this.updatePosition();
-        }
+            this.updatePosition(state.deltaTime || 0);
+          }
+          
         this.updateSprite(state);
 
         if (this.isPlayerControlled && this.remainingMovement === 0 && state.pressedKey){ 

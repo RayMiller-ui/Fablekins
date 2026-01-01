@@ -7,45 +7,84 @@ class Overworld {
  }
 
 
-  //Defining the game Loop
+ drawHUD() {
+  this.ctx.save();
 
-  startGameLoop(){
-    const step = () => {
+  this.ctx.fillStyle = "red";
+  this.ctx.font = "12px monospace";
+  this.ctx.textAlign = "right";
 
-      //Clearing the canvas -> [Clears the whole canvar, har frame pe]
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  this.ctx.fillText(
+    `${this.map.dotsCollected} / ${this.map.totalDots}`,
+    this.canvas.width - 8,
+    14
+  );
 
-      //Camera focused character object
-      const CameraPerson = this.map.gameObjects.hero;
+  if (this.map.dotsCollected === this.map.totalDots) {
+    this.ctx.fillStyle = "lime";
+    this.ctx.font = "20px monospace";
+    this.ctx.textAlign = "center";
 
-      //Draws Lower image over the map -> [Layer 1]
-      this.map.drawLowerImg(this.ctx, CameraPerson);
-
-      //Updates everything before drawing 
-      Object.values(this.map.gameObjects).forEach(e => {
-        e.update({
-          pressedKey: this.DirectionInput.direction,
-          map: this.map,
-        })
-      })
-
-      //Draws game objects -> [Main Object]
-      Object.values(this.map.gameObjects).forEach(e => {
-        e.sprite.draw(this.ctx, CameraPerson);
-      })
-
-      //Draws Upper image over the map -> [Foreground, sabko cover karega]
-      this.map.drawUpperImg(this.ctx, CameraPerson);
-
-      requestAnimationFrame(() => {
-        step();
-      })
-
-    }
-
-    step();
+    this.ctx.fillText(
+      "YOU WON!",
+      this.canvas.width / 2,
+      this.canvas.height / 2
+    );
   }
 
+  this.ctx.restore();
+}
+
+
+  //Defining the game Loop
+
+  startGameLoop() {
+    let lastTime = performance.now();
+  
+    const step = (currentTime) => {
+      const deltaTime = (currentTime - lastTime) / 1000; // seconds
+      lastTime = currentTime;
+  
+      // Clear canvas
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  
+      const CameraPerson = this.map.gameObjects.hero;
+  
+      // Draw lower map
+      this.map.drawLowerImg(this.ctx, CameraPerson);
+  
+      // Update game objects (time-aware)
+      Object.values(this.map.gameObjects).forEach(obj => {
+        obj.update({
+          pressedKey: this.DirectionInput.direction,
+          map: this.map,
+          deltaTime,
+        });
+      });
+  
+      // Draw sprites
+      Object.values(this.map.gameObjects).forEach(obj => {
+        if (obj.sprite) {
+          obj.sprite.draw(this.ctx, CameraPerson);
+        }
+        if (obj.draw) {
+          obj.draw(this.ctx, CameraPerson);
+        }
+        
+      });
+  
+      // Draw upper map
+      this.map.drawUpperImg(this.ctx, CameraPerson);
+
+      this.drawHUD();
+
+  
+      requestAnimationFrame(step);
+    };
+  
+    requestAnimationFrame(step);
+  }
+  
 
   //Starting the init ()
 
@@ -57,6 +96,10 @@ class Overworld {
     this.DirectionInput = new DirectionInput();
     this.DirectionInput.init();
     this.startGameLoop();
+
+    this.map.spawnDot();
+    updateDotCounter(0, this.map.totalDots);
+
     
 
   //---------------------------[OLD CODE -> HARDCODED]--------------------------------------//

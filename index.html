@@ -5,20 +5,37 @@
     <link href="/styles.css" type="text/css" rel="stylesheet">
   </head>
   <body>
+
+    <div class="hud"> <!--Will remove later [Testing the counter]-->
+      <span id="dotCounter">0 / 30</span>
+    </div>
+    
     <div class="game-container">
       <canvas class="game-canvas" width="352" height="198"></canvas>
     </div>
 
     <!-- Scripts -->
     <!-- ORDER VERY IMPORTENT -->
+
+    <!-- Core Utilities -->
     <script src="/Utillities.js"></script>
+    <script src="/UI.js"></script>
+
+    <!-- Engine -->
     <script src="/Collision.js"></script>
     <script src="/DirectionInput.js"></script>
     <script src="/Sprite.js"></script>
     <script src="/GameObject.js"></script>
+
+  <!-- Game Objects -->
     <script src="/Person.js"></script>
+    <script src="/Dot.js"></script>
+
+  <!-- World Mapping-->
     <script src="/OverworldMap.js"></script>
     <script src="/Overworld.js"></script>
+
+  <!-- Boot the Engine.... Let's goooo!!! -->
     <script src="/init.js"></script>
 
   </body>
