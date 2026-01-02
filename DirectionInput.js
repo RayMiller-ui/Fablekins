@@ -29,6 +29,41 @@ class DirectionInput {
     // Saara ka saara keyPresses array handling idhar hi hoga 
     init() {
 
+        // TOUCH CONTROLS
+        document.querySelectorAll(".touch-controls button")
+            .forEach(btn => {
+              const dir = btn.dataset.dir;
+
+            btn.addEventListener("touchstart", e => {
+              e.preventDefault();
+              if (!this.keyPresses.includes(dir)) {
+                this.keyPresses.unshift(dir);
+              }
+            });
+
+            btn.addEventListener("touchend", e => {
+              e.preventDefault();
+              const index = this.keyPresses.indexOf(dir);
+              if (index > -1) {
+                this.keyPresses.splice(index, 1);
+              }
+            });
+
+            btn.addEventListener("mousedown", () => {
+                if (!this.keyPresses.includes(dir)) {
+                  this.keyPresses.unshift(dir);
+                }
+            });
+            
+            btn.addEventListener("mouseup", () => {
+                const index = this.keyPresses.indexOf(dir);
+                if (index > -1) {
+                  this.keyPresses.splice(index, 1);
+                }
+            });
+  });
+
+
         // Key Dabega toh, Array me wo key sabse aage add hoga
 
         document.addEventListener("keydown", e => {
