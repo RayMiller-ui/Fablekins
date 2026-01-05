@@ -11,7 +11,7 @@ class Ghost extends GameObject {
         left: ["x",-1]
       }; 
 
-      this.speed = config.speed ?? 60; // pixels per second (slower than player)
+      this.speed = config.speed ?? 75; // pixels per second (slower than player)
       this.remainingMovement = 0;
       this.targetX = this.x;
       this.targetY = this.y;

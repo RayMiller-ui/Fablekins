@@ -11,6 +11,10 @@ class Person extends GameObject{
             "right":["x", 1],
             "left" :["x",-1]
         }
+
+        this.baseSpeed = 144;     // movement speed
+        this.speed = 144;
+
          
     }
 
@@ -20,7 +24,9 @@ class Person extends GameObject{
 
     // Character position updates
     updatePosition(deltaTime) {
-        const speed = 144; // pixels per second
+        //const speed = 144; // pixels per second
+        const speed = this.speed;
+
         const [axis, change] = this.directionUpdate[this.direction];
       
         const movement = Math.min(
@@ -43,6 +49,11 @@ class Person extends GameObject{
 
     // Sprite sheet animation updates
     updateSprite(state){
+
+        const speedRatio = this.speed / this.baseSpeed;
+
+        // Lower animationSpeed = faster animation
+        this.sprite.animationSpeed = Math.max(4, Math.round(16 / speedRatio));
 
         // Case when character want to stop
         if (this.isPlayerControlled && this.remainingMovement === 0 && !state.pressedKey){

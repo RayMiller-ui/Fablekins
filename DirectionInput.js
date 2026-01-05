@@ -67,14 +67,14 @@ class DirectionInput {
         // Key Dabega toh, Array me wo key sabse aage add hoga
 
         document.addEventListener("keydown", e => {
-            console.log (e.code);        // [Jo daba wo dikhado] -> console me, jo key daba
+            //console.log (e.code);        // [Jo daba wo dikhado] -> console me, jo key daba
             const dir = this.map[e.code];
 
             // (dir && this.keyPresses.indexOf(dir) === -1) Ye zahar nahi chahiye jeevan me    
             // Toh, agar koi nayi key dabi, jo VALID hai BUT keyPresses array me nahi hai -> Kardo array me add bhai
             if (dir && !this.keyPresses.includes(dir)){
                 this.keyPresses.unshift(dir);
-                console.log(this.keyPresses); // Latest array dikhaega -> console me, debugging....🤨
+                //console.log(this.keyPresses); // Latest array dikhaega -> console me, debugging....🤨
             }
         })
         
@@ -88,7 +88,7 @@ class DirectionInput {
             const index = this.keyPresses.indexOf(dir);
             if (index >-1){  // Valid index meaning -> if valid key pressed
                 this.keyPresses.splice(index, 1);
-                console.log(this.keyPresses); // Latest array dikhaega -> console me
+                //console.log(this.keyPresses); // Latest array dikhaega -> console me
             }
         })
     }
