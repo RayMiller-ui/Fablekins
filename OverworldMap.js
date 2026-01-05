@@ -40,14 +40,14 @@ class OverworldMap{
         if (this.dotsCollected >= this.totalDots) return;
       
         const x = Utilities.withGrid(
-          Math.floor(Math.random() * 20) + 5
+          Math.floor(Math.random() * 37) + 5
         );
         const y = Utilities.withGrid(
-          Math.floor(Math.random() * 15) + 5
+          Math.floor(Math.random() * 32) + 5
         );
       
         // Avoid spawning inside walls
-        if (this.walls[`${x}, ${y}`]) {
+        if (this.walls[`${x}, ${y}`]) { //[Utilities.asGridCords(39,2)] this format
           this.spawnDot();
           return;
         }
@@ -60,7 +60,8 @@ class OverworldMap{
       
         this.gameObjects.dot = this.activeDot;
 
-        console.log("Dot spawned")
+        // Debug
+        console.log(`Dot spawned at ${x / 16}, ${y / 16}`)
       }
 
       // MY LITTLE DOTS ARE CONSUMED
