@@ -11,7 +11,7 @@ class OverworldMap{
         this.upperImage.src = config.uppersrc;
 
         // DOT SYSTEM
-        this.totalDots = 30;
+        this.totalDots = 10;
         this.dotsCollected = 0;
         this.activeDot = null;
     }
@@ -74,11 +74,18 @@ class OverworldMap{
         updateDotCounter(this.dotsCollected, this.totalDots);
       
         if (this.dotsCollected === this.totalDots) {
+          delete this.gameObjects.ghost;
           showWinMessage();
         } else {
           this.spawnDot();
         }
       }
+
+      playerDied() {
+        alert("YOU DIED");
+        location.reload();
+      }
+      
       
       
 }
@@ -98,14 +105,22 @@ class OverworldMap{
                     x:Utilities.withGrid(15),
                     y:Utilities.withGrid(13),
                     src:"/images/characters/people/HQ.png",
+                    useShadow:false,
                     isPlayerControlled:true,
                 }),
-                npc: new Person({
-                    x:Utilities.withGrid(32),
-                    y:Utilities.withGrid(3),
-                    src:"/images/characters/people/HQ.png",
-                    isPlayerControlled:false,
-                })   
+                // npc: new Person({
+                //     x:Utilities.withGrid(32),
+                //     y:Utilities.withGrid(3),
+                //     src:"/images/characters/people/HQ.png",
+                //     isPlayerControlled:false,
+                // }),
+                ghost: new Ghost({
+                  x: Utilities.withGrid(20),
+                  y: Utilities.withGrid(15),
+                  //useFullImage: true,
+                  src: "/images/characters/ghost.png",
+                }),
+                
 
             },
 

@@ -11,6 +11,8 @@ class Sprite{
         //set up the shadow 
         this.shadow = new Image();
         this.useShadow = config.useShadow ?? true; 
+        this.useFullImage = config.useFullImage ?? false;
+
   
         if (this.useShadow){
             this.shadow.src = config.shadowsrc ?? "/images/characters/shadow.png";
@@ -88,31 +90,31 @@ class Sprite{
         }
     }
 
-    draw(ctx, CameraPerson){
+    draw(ctx, CameraPerson) {
         const x = this.gameObject.x - 8 + Utilities.withGrid(10.5) - CameraPerson.x;
         const y = this.gameObject.y - 18 + Utilities.withGrid(6) - CameraPerson.y;
-
-        // This is a single image, no need for cropping
-        this.useShadow && this.isShadowLoaded && ctx.drawImage(this.shadow,x,y);
-
+      
+        // Draw shadow if enabled
+        this.useShadow && this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
+      
+        // NORMAL ANIMATED MODE
         const [frameX, frameY] = this.frame;
-
-        // this.isLoaded && ctx.drawImage(this.image,
-        //     frameX *32,frameY *32,
-        //     32,32,
-        //     x,y,
-        //     32,32
-        // )
-
-        this.isLoaded && ctx.drawImage(this.image,
-        frameX *64,frameY *64,
-        64,64,
-        x,y,
-        32,32
-        )
-
+      
+        this.isLoaded && ctx.drawImage(
+          this.image,
+          frameX * 64,
+          frameY * 64,
+          64,
+          64,
+          x,
+          y,
+          32,
+          32
+        );
+      
         this.updateAnimationProgress();
-    }
+      }
+      
 
     
 }
