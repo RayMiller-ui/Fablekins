@@ -14,6 +14,8 @@ class OverworldMap{
         this.totalDots = 10;
         this.dotsCollected = 0;
         this.activeDot = null;
+        this.ghostActivated = false;
+
     }
 
     drawLowerImg(ctx, CameraPerson){
@@ -33,6 +35,21 @@ class OverworldMap{
     isSpaceTaken(currentX, currentY, direction){
         const {x,y} = Utilities.upcomingPosition(currentX, currentY, direction);
         return this.walls[`${x}, ${y}`] ?? false;
+    }
+
+    activateGhostOnce() {
+      if (this.ghostActivated) return;
+    
+      const hero = this.gameObjects.hero;
+    
+      if (hero.remainingMovement > 0) {
+        this.ghostActivated = true;
+    
+        if (this.gameObjects.ghost) {
+          this.gameObjects.ghost.isActive = true;
+          console.log("Ghost activated");
+        }
+      }
     }
 
     // SPAWING MY LITTLE DOTS
@@ -76,6 +93,10 @@ class OverworldMap{
         if (this.dotsCollected === this.totalDots) {
           delete this.gameObjects.ghost;
           showWinMessage();
+          setTimeout(()=>{
+            location.reload();
+          }, 3000)
+          
         } else {
           this.spawnDot();
         }
@@ -84,10 +105,8 @@ class OverworldMap{
       playerDied() {
         alert("YOU DIED");
         location.reload();
-      }
-      
-      
-      
+      } 
+         
 }
 
 

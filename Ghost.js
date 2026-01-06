@@ -15,6 +15,8 @@ class Ghost extends GameObject {
       this.remainingMovement = 0;
       this.targetX = this.x;
       this.targetY = this.y;
+      this.isActive = false;
+
 
     //   this.sprite = new Sprite({
     //     gameObject: this,
@@ -31,6 +33,8 @@ class Ghost extends GameObject {
   
     update(state) {
       const hero = state.map.gameObjects.hero;
+      if (!this.isActive) return;
+
   
       // Already moving -> continue
       if (this.remainingMovement > 0) {

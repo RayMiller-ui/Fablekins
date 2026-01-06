@@ -72,7 +72,9 @@ class Overworld {
         }
         
       });
-  
+
+      this.map.activateGhostOnce();
+
       // Draw upper map
       this.map.drawUpperImg(this.ctx, CameraPerson);
 
