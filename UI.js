@@ -25,18 +25,19 @@ class InstructionsScreen {
         c.fillStyle = "#ede7f6";
         c.font = "bold 13px 'Courier New'";
         c.textAlign = "center";
-        c.fillText("HOW TO PLAY", W / 2, 32);
+        c.fillText("HOW TO PLAY", W / 2, 30);
 
         // Instructions
         const lines = [
             "⚫  Avoid the ghost",
             "🔴  Collect dots to level up",
             "⚡  Golden dot = speed boost, nerf ghost",
-            "←↑↓→  Move with arrow keys",
+            "Use arrow keys to run.",
+            "Pro-tip: You can cross the ghost when it's slow!"
         ];
-        c.font = "13px 'Courier New'";
+        c.font = "10px 'Courier New'";
         c.fillStyle = "#b39ddb";
-        lines.forEach((txt, i) => c.fillText(txt, W / 2, 65 + i * 22));
+        lines.forEach((txt, i) => c.fillText(txt, W / 2, 60 + i * 20));
 
         // Proceed button
         const { x, y, w, h } = this.btn;
